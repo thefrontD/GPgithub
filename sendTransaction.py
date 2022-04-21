@@ -7,13 +7,14 @@ import sys
 #import time
 #import numpy as np
 import os, binascii
+import time
 from datetime import datetime
 from multiprocessing import Pool
 
 # Settings
 FULL_PORT = "8081"
 TEST_PORT = "8084"
-PASSWORD = "wjdansrb1"
+PASSWORD = "1234"
 
 # Account number
 ACCOUNT_NUM = int(sys.argv[1])
