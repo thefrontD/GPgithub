@@ -1,5 +1,5 @@
 #set ethereum data directory
-fullDataDir="/ssd/ethereum"
+fullDataDir="~/ether/data"
 
 #remove chaindata if you want to start etheruem from genesis block
 rm -vrf ${fullDataDir}
@@ -13,4 +13,4 @@ cd build/bin
 ./geth --datadir ${fullDataDir} init genesis.json
 
 #run geth
-./geth --datadir ${fullDataDir} --keystore "./keystore" --gcmode archive --networkid 12345 --http --http.port "8081" --http.corsdomain "*" --port 30303 --nodiscover --http.api="admin,eth,debug,miner,net,txpool,personal,web3" --allow-insecure-unlock
+./geth --datadir ${fullDataDir} --keystore "./keystore" --gcmode archive --networkid 76927692 --http --http.port "8081" --http.corsdomain "*" --port 30303 --nodiscover --http.api="admin,eth,debug,miner,net,txpool,personal,web3" --allow-insecure-unlock
