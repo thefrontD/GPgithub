@@ -1,6 +1,6 @@
 #set ethereum data directory
 fullDataDir="~/ether/data"
-logData="~/ether/logs/gethlog.log"
+logData="./gethlog.log"
 
 #remove chaindata if you want to start etheruem from genesis block
 rm -vrf ${fullDataDir}
