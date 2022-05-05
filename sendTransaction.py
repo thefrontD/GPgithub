@@ -76,7 +76,10 @@ def sendTransaction(to):
 
 
 def sendTransactions(num):
+    checkpoint = num/20
     for i in range(int(num)):
+        if i%checkpoint == 0:
+            print("transaction:",i)
         to = makeRandHex()
         while True:
             try:
