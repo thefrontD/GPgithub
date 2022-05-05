@@ -20,7 +20,7 @@ cat /dev/null > gethlog2.log
 ./geth --datadir ${fullDataDir} init genesis.json
 
 #run geth
-nohup ./geth --datadir ${fullDataDir} --keystore "./keystore" --gcmode archive --networkid 76927692 --http --http.port "8081" --http.corsdomain "*" --port 30303 --http.api="admin,eth,debug,miner,net,txpool,personal,web3" --allow-insecure-unlock --rpc 2>>${logData} &
+nohup ./geth --datadir ${fullDataDir} --keystore "./keystore" --gcmode archive --networkid 76927692 --http --http.port "8085" --http.corsdomain "*" --port 30307 --http.api="admin,eth,debug,miner,net,txpool,personal,web3" --allow-insecure-unlock --rpc 2>>${logData} &
 
 ##export PATH=$PATH:/usr/local/go/bin
 
