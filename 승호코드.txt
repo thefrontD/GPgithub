@@ -1,0 +1,58 @@
+func simplifyNode(n node) node {
+        s := stack{}
+        var popped bool = false
+        curr := node_s{node: n, fullnodeIndex: 0, isRoot: true}
+        var leaf node = nil
+        for {
+                switch c := curr.node.(type){
+                case *shortNode:
+                        if popped {
+                                raw := &rawShortNode{Key: c.Key, Val: leaf}
+                                leaf = raw
+                                if curr.isRoot{
+                                        return leaf
+                                } else {
+                                curr = s.pop()
+                                popped = true
+                                }
+                        } else {
+                                s.push(curr)
+                                curr = node_s{node: c.Val, fullnodeIndex: 0, isRoot: false}
+                        }
+                case *fullNode:
+                        temp2 := node_s{node: rawFullNode(c.Children), fullnodeIndex: 0, isRoot: curr.isRoot}
+                        temp2node := temp2.node.(rawFullNode)
+                        s.push(temp2)
+                        if temp2node[0] != nil {
+                                curr = node_s{node: temp2node[0], fullnodeIndex: 0, isRoot: false}
+                        } else {
+                                curr = s.pop()
+                                leaf = nil
+                                popped = true
+                        }
+                case rawFullNode:
+                        currnode := curr.node.(rawFullNode)
+                        currnode[curr.fullnodeIndex] = leaf
+                        curr.fullnodeIndex++
+                        if curr.fullnodeIndex == 17 {
+                                leaf = currnode
+                                if curr.isRoot {
+                                        return leaf
+                                }
+                                curr = s.pop()
+                                popped = true
+                         } else {
+                                s.push(curr)
+                                curr = node_s{node: currnode[curr.fullnodeIndex], fullnodeIndex: 0, isRoot: false}
+                         }
+                case valueNode, hashNode, rawNode:
+                        leaf = curr.node
+                        curr = s.pop()
+                        popped = true
+                case nil:
+                        leaf = nil
+                        curr = s.pop()
+                        popped = true
+                }
+        }
+}

@@ -8,8 +8,24 @@ import sys
 #import numpy as np
 import os, binascii
 import time
+import logging
 from datetime import datetime
 from multiprocessing import Pool
+
+#logger
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter(u'%(asctime)s [%(levelname)8s] %(message)s')
+
+file_handler = logging.FileHandler('./pythonOutput.log')
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+
+logger.debug("debug logging")
+
+
 
 # Settings
 FULL_PORT = "8085"
@@ -28,7 +44,7 @@ testnode = Web3(Web3.HTTPProvider("http://localhost:" + TEST_PORT))
 
 # functions
 def main():
-    print("Insert ", ACCOUNT_NUM, " accounts")
+    logger.debug("Insert ", ACCOUNT_NUM, " accounts")
 
     # unlock coinbase
     fullnode.geth.personal.unlockAccount(fullnode.eth.coinbase, PASSWORD, 0)
@@ -37,7 +53,7 @@ def main():
     currentBlock = fullnode.eth.blockNumber
 
     # main loop for send txs
-    print("start sending transactions")
+    logger.debug("start sending transactions")
 
     # send transactions
     # sendPool.map(sendTransactions, ACCOUNT_NUM)
@@ -52,13 +68,13 @@ def main():
 
     #sync
     fullpeer = fullnode.geth.admin.node_info()
-    print("adding peer")
+    logger.debug("adding peer")
     syncStartTime = time.process_time()
     testnode.geth.admin.add_peer(fullpeer.enode)
     while(testnode.eth.blockNumber < currentBlock):
         pass
     syncEndTime = time.process_time()
-    print("sync time:", syncEndTime- syncStartTime, "seconds")
+    logger.debug("sync time:", syncEndTime- syncStartTime, "seconds")
 
 
 
@@ -78,8 +94,8 @@ def sendTransaction(to):
 def sendTransactions(num):
     checkpoint = num/20
     for i in range(int(num)):
-        if i%checkpoint == 0:
-            print("transaction:",i)
+        if i%100 == 0:
+            logger.debug("current time: ",time.process_time() , "transaction:",i)
         to = makeRandHex()
         while True:
             try:
@@ -103,5 +119,5 @@ if __name__ == "__main__":
     sendPool = Pool(THREAD_COUNT) # -> important: this should be in this "__main__" function
     main()
     totalEndTime = datetime.now() - totalStartTime
-    print("total elapsed:", totalEndTime.seconds, "seconds")
-    print("DONE")
+    logger.debug("total elapsed:", totalEndTime.seconds, "seconds")
+    logger.debug("DONE")
