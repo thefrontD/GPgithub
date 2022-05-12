@@ -12,6 +12,18 @@ import logging
 from datetime import datetime
 from multiprocessing import Pool
 
+#logger
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter(u'%(asctime)s [%(levelname)8s] %(message)s')
+
+file_handler = logging.FileHandler('./pythonOutput.log')
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+
+logger.debug("debug logging")
 
 # Settings
 FULL_PORT = "8085"
@@ -30,8 +42,6 @@ testnode = Web3(Web3.HTTPProvider("http://localhost:" + TEST_PORT))
 
 # functions
 def main():
-    logger.debug("Insert ", ACCOUNT_NUM, " accounts")
-
     # unlock coinbase
     fullnode.geth.personal.unlockAccount(fullnode.eth.coinbase, PASSWORD, 0)
 
