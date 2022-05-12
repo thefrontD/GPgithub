@@ -8,22 +8,8 @@ import sys
 #import numpy as np
 import os, binascii
 import time
-import logging
 from datetime import datetime
 from multiprocessing import Pool
-
-#logger
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-
-formatter = logging.Formatter(u'%(asctime)s [%(levelname)8s] %(message)s')
-
-file_handler = logging.FileHandler('./pythonOutput.log')
-file_handler.setFormatter(formatter)
-
-logger.addHandler(file_handler)
-
-logger.debug("debug logging")
 
 # Settings
 FULL_PORT = "8085"
@@ -55,7 +41,6 @@ def main():
     #sync
     fullpeer = fullnode.geth.admin.node_info()
 
-    logger.debug("adding peer")
     print("adding peer")
 
     syncStartTime = time.process_time()
@@ -64,7 +49,6 @@ def main():
         pass
     syncEndTime = time.process_time()
 
-    logger.debug("sync time:", syncEndTime- syncStartTime, "seconds")
     print("sync time:", syncEndTime- syncStartTime, "seconds")
 
 if __name__ == "__main__":
@@ -74,7 +58,5 @@ if __name__ == "__main__":
     main()
     totalEndTime = datetime.now() - totalStartTime
 
-    logger.debug("total elapsed:", totalEndTime.seconds, "seconds")
     print("total elapsed:", totalEndTime.seconds, "seconds")
-    logger.debug("DONE")
     print("DONE")
