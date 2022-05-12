@@ -27,11 +27,8 @@ logger.debug("debug logging")
 
 # Settings
 FULL_PORT = "8085"
-TEST_PORT = "8084"
+TEST_PORT = "8086"
 PASSWORD = "1234"
-
-# Account number
-ACCOUNT_NUM = int(sys.argv[1])
 
 # multiprocessing
 THREAD_COUNT = 8
@@ -57,13 +54,18 @@ def main():
 
     #sync
     fullpeer = fullnode.geth.admin.node_info()
+
     logger.debug("adding peer")
+    print("adding peer")
+
     syncStartTime = time.process_time()
     testnode.geth.admin.add_peer(fullpeer.enode)
     while(testnode.eth.blockNumber < currentBlock):
         pass
     syncEndTime = time.process_time()
+
     logger.debug("sync time:", syncEndTime- syncStartTime, "seconds")
+    print("sync time:", syncEndTime- syncStartTime, "seconds")
 
 if __name__ == "__main__":
 
@@ -71,5 +73,8 @@ if __name__ == "__main__":
     sendPool = Pool(THREAD_COUNT) # -> important: this should be in this "__main__" function
     main()
     totalEndTime = datetime.now() - totalStartTime
+
     logger.debug("total elapsed:", totalEndTime.seconds, "seconds")
+    print("total elapsed:", totalEndTime.seconds, "seconds")
     logger.debug("DONE")
+    print("DONE")

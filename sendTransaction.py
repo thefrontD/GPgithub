@@ -29,7 +29,7 @@ logger.debug("debug logging")
 
 # Settings
 FULL_PORT = "8085"
-TEST_PORT = "8084"
+TEST_PORT = "8086"
 PASSWORD = "1234"
 
 # Account number
