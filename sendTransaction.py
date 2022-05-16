@@ -16,7 +16,6 @@ from multiprocessing import Pool
 
 # Settings
 FULL_PORT = "8085"
-TEST_PORT = "8086"
 PASSWORD = "1234"
 
 # Account number
@@ -27,7 +26,6 @@ THREAD_COUNT = 8
 
 # providers
 fullnode = Web3(Web3.HTTPProvider("http://localhost:" + FULL_PORT))
-testnode = Web3(Web3.HTTPProvider("http://localhost:" + TEST_PORT))
 
 # functions
 def main():
@@ -52,17 +50,6 @@ def main():
         pass # just wait for mining
     fullnode.geth.miner.stop()  # stop mining
     currentBlock = fullnode.eth.blockNumber
-
-    #sync
-    fullpeer = fullnode.geth.admin.node_info()
-    print("adding peer")
-    syncStartTime = time.process_time()
-    testnode.geth.admin.add_peer(fullpeer.enode)
-    while(testnode.eth.blockNumber < currentBlock):
-        pass
-    syncEndTime = time.process_time()
-    print("sync time:", syncEndTime- syncStartTime, "seconds")
-
 
 
 def sendTransaction(to):
